@@ -118,6 +118,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://career-dts.onrender.com",
     # Add your frontend's Render URL when you deploy it
 ]
 
