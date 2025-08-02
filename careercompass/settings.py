@@ -176,3 +176,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Static files settings for production
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Add this to the bottom of settings.py
+CSRF_TRUSTED_ORIGINS = [
+    'https://career-compass-backend-ew6d.onrender.com',
+    'https://career-dts.onrender.com/' # IMPORTANT: Replace with your actual frontend URL
+]
