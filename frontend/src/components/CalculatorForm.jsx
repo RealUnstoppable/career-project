@@ -24,7 +24,7 @@ function CalculatorForm() {
     setResults(null);
     setJobs([]);
 
-    axios.post('http://127.0.0.1:8000/api/calculate/', {
+    axios.post('https://career-compass-backend-ew6d.onrender.com', {
       currentIncome,
       currentState,
       newIncome,
@@ -47,7 +47,7 @@ function CalculatorForm() {
       return;
     }
 
-    axios.post('http://127.0.0.1:8000/api/saved-jobs/', jobToSave, {
+    axios.post('https://career-compass-backend-ew6d.onrender.com', jobToSave, {
       headers: {
         'Authorization': `Token ${authToken}`
       }

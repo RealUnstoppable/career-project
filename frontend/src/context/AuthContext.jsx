@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (username, password) => {
     try {
-      let response = await axios.post('http://127.0.0.1:8000/api/auth/login/', {
+      let response = await axios.post('https://career-compass-backend-ew6d.onrender.com', {
         username,
         password,
       });
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const registerUser = async (username, email, password) => {
     try {
-      await axios.post('http://127.0.0.1:8000/api/auth/registration/', {
+      await axios.post('https://career-compass-backend-ew6d.onrender.com', {
         username,
         email,
         password,

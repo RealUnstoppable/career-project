@@ -20,10 +20,10 @@ function DashboardPage() {
       try {
         // Use Promise.all to fetch both sets of data concurrently
         const [jobsResponse, goalsResponse] = await Promise.all([
-          axios.get('http://127.0.0.1:8000/api/saved-jobs/', {
+          axios.get('https://career-compass-backend-ew6d.onrender.com', {
             headers: { 'Authorization': `Token ${authToken}` }
           }),
-          axios.get('http://127.0.0.1:8000/api/goals/', {
+          axios.get('https://career-compass-backend-ew6d.onrender.com', {
             headers: { 'Authorization': `Token ${authToken}` }
           })
         ]);
@@ -41,7 +41,7 @@ function DashboardPage() {
   const handleGoalSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/goals/', 
+      const response = await axios.post('https://career-compass-backend-ew6d.onrender.com', 
         { title: title, target_metric: metric, target_value: value },
         { headers: { 'Authorization': `Token ${authToken}` } }
       );
