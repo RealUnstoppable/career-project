@@ -44,7 +44,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
-ROOT_URLCONF = 'careercompass.urls'
+ROOT_URLCONF = 'careercompass.urls.py'
 
 TEMPLATES = [
     {
