@@ -4,21 +4,14 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Reads the SECRET_KEY from Render's environment variables
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
-# Reads DEBUG setting from Render's environment, defaulting to False
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
-
-# Reads ALLOWED_HOSTS from Render's environment. Defaults to localhost for local dev.
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
-# Render Hostname Integration
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-# Application definition
 INSTALLED_APPS = [
     'core',
     'django.contrib.admin',
@@ -70,7 +63,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'careercompass.wsgi.application'
 
-# Database
+# Database configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -78,8 +71,14 @@ DATABASES = {
     }
 }
 
-if 'RENDER' in os.environ:
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+# Production database configuration for Render
+# FIX: This explicitly checks for the DATABASE_URL variable before trying to use it.
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.config(
+        default=DATABASE_URL, conn_max_age=600, ssl_require=True
+    )
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -94,7 +93,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -109,14 +107,14 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:5173",
-#     "https://career-dts.onrender.com",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://career-dts.onrender.com",
+]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://career-compass-backend-ew6d.onrender.com',
     'https://career-dts.onrender.com',
 ]
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
