@@ -5,24 +5,22 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // Load user and token from localStorage on initial load
-  const [user, setUser] = useState(() => 
+  const [user, setUser] = useState(() =>
     localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   );
   const [authToken, setAuthToken] = useState(() => localStorage.getItem('authToken'));
-  
   const navigate = useNavigate();
 
   const loginUser = async (username, password) => {
     try {
-      let response = await axios.post('https://career-compass-backend-ew6d.onrender.com', {
+      // FIX: Corrected the API endpoint
+      let response = await axios.post('https://career-compass-backend-ew6d.onrender.com/api/auth/login/', {
         username,
         password,
       });
       const userData = { username };
       setAuthToken(response.data.key);
       setUser(userData);
-      // Save both token and user to localStorage
       localStorage.setItem('authToken', response.data.key);
       localStorage.setItem('user', JSON.stringify(userData));
       navigate('/');
@@ -34,7 +32,8 @@ export const AuthProvider = ({ children }) => {
 
   const registerUser = async (username, email, password) => {
     try {
-      await axios.post('https://career-compass-backend-ew6d.onrender.com', {
+      // FIX: Corrected the API endpoint
+      await axios.post('https://career-compass-backend-ew6d.onrender.com/api/auth/registration/', {
         username,
         email,
         password,
@@ -50,7 +49,6 @@ export const AuthProvider = ({ children }) => {
   const logoutUser = () => {
     setAuthToken(null);
     setUser(null);
-    // Remove both from localStorage on logout
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     navigate('/login');
@@ -58,7 +56,7 @@ export const AuthProvider = ({ children }) => {
 
   const contextData = {
     user,
-    authToken, // Expose authToken for API calls
+    authToken,
     loginUser,
     registerUser,
     logoutUser,

@@ -16,9 +16,6 @@ function App() {
             <Route path="/" element={<CalculatorForm />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterForm />} />
-            <Route path="/" element={<CalculatorForm />} />
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/register" element={<RegisterForm />} />
             <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>
         </div>

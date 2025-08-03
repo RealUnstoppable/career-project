@@ -1,6 +1,3 @@
-"""
-Django settings for careercompass project.
-"""
 import os
 import dj_database_url
 from pathlib import Path
@@ -10,12 +7,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%ejyvq%jew1%m7c#7lf_22cm(xdjj4fg0l)wu4z^c24r=y5*c+'
+# FIX: Reads the secret key from the Render environment variables
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(',')
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -119,12 +118,11 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "https://career-dts.onrender.com",
-    # Add your frontend's Render URL when you deploy it
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://career-compass-backend-ew6d.onrender.com',
-    'https://career-dts.onrender.com/' # Make sure this is your correct frontend URL
+    'https://career-dts.onrender.com'
 ]
 
 # Render Hostname Integration
@@ -132,4 +130,5 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'httpss')
+# FIX: Corrected SSL header for Render
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

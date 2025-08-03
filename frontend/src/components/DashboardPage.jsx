@@ -6,24 +6,20 @@ function DashboardPage() {
   const [savedJobs, setSavedJobs] = useState([]);
   const [goals, setGoals] = useState([]);
   const { authToken } = useAuth();
-
-  // State for the new goal form
   const [title, setTitle] = useState('');
   const [metric, setMetric] = useState('');
   const [value, setValue] = useState('');
 
-  // Fetch data when the component loads
   useEffect(() => {
     const fetchData = async () => {
       if (!authToken) return;
-
       try {
-        // Use Promise.all to fetch both sets of data concurrently
+        // FIX: Corrected the API endpoints
         const [jobsResponse, goalsResponse] = await Promise.all([
-          axios.get('https://career-compass-backend-ew6d.onrender.com', {
+          axios.get('https://career-compass-backend-ew6d.onrender.com/api/saved-jobs/', {
             headers: { 'Authorization': `Token ${authToken}` }
           }),
-          axios.get('https://career-compass-backend-ew6d.onrender.com', {
+          axios.get('https://career-compass-backend-ew6d.onrender.com/api/goals/', {
             headers: { 'Authorization': `Token ${authToken}` }
           })
         ]);
@@ -33,20 +29,18 @@ function DashboardPage() {
         console.error("Failed to fetch dashboard data", error);
       }
     };
-
     fetchData();
   }, [authToken]);
 
-  // Handle the submission of the new goal form
   const handleGoalSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://career-compass-backend-ew6d.onrender.com', 
+      // FIX: Corrected the API endpoint
+      const response = await axios.post('https://career-compass-backend-ew6d.onrender.com/api/goals/',
         { title: title, target_metric: metric, target_value: value },
         { headers: { 'Authorization': `Token ${authToken}` } }
       );
-      setGoals([...goals, response.data]); // Add new goal to the list
-      // Clear form fields
+      setGoals([...goals, response.data]);
       setTitle('');
       setMetric('');
       setValue('');
@@ -72,10 +66,8 @@ function DashboardPage() {
           <p>You have no saved jobs yet.</p>
         )}
       </div>
-
       <div className="dashboard-column">
         <h2>Your Goals</h2>
-        {/* Form to add a new goal */}
         <form onSubmit={handleGoalSubmit} className="goal-form">
           <h4>Add a New Goal</h4>
           <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder="Goal Title (e.g., Learn React)" required />
@@ -83,8 +75,6 @@ function DashboardPage() {
           <input type="text" value={value} onChange={e => setValue(e.target.value)} placeholder="Target Value (e.g., By December)" required />
           <button type="submit">Add Goal</button>
         </form>
-
-        {/* List of existing goals */}
         {goals.length > 0 ? (
           goals.map(goal => (
             <div key={goal.id} className="goal-card">
