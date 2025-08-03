@@ -72,7 +72,7 @@ DATABASES = {
 }
 
 # Production database configuration for Render
-# FIX: This explicitly checks for the DATABASE_URL variable before trying to use it.
+# This explicitly checks if the DATABASE_URL is available before using it.
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
