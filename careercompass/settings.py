@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # Reads DEBUG setting from Render's environment, defaulting to False
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-# Reads ALLOWED_HOSTS from Render's environment
+# Reads ALLOWED_HOSTS from Render's environment. Defaults to localhost for local dev.
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
 
 # Render Hostname Integration
@@ -109,14 +109,14 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "https://career-dts.onrender.com",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     "https://career-dts.onrender.com",
+# ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://career-compass-backend-ew6d.onrender.com',
     'https://career-dts.onrender.com',
 ]
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
