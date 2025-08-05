@@ -103,8 +103,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+CORS_ALLOWED_ORIGINS = [,
     "https://career-dts.onrender.com",
 ]
 
